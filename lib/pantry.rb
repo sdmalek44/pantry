@@ -47,12 +47,11 @@ class Pantry
   end
 
   def how_many_of_this?(recipe)
-    recipe.ingredients.inject(0) do |sum, ingred_num|
-      num_in_stock = @stock[ingred_num[0]]
-      num_we_have = ingred_num[1]
-      if num_we_have < num_in_stock
-        num_in_stock = num_in_stock / num_we_have
-        sum += 1
-      end
+    valid_ingredients = @stock.inject([]) do |array, ingred_num|
+      array << (recipe.amount_required(ingred_num[0])) / ingred_num[1])
+    end
+    valid_ingredients.min
   end
+
+  def 
 end
