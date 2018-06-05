@@ -47,7 +47,7 @@ class PantryTest < Minitest::Test
     assert_equal printed, @pantry.print_shopping_list
   end
 
-  def test_what_i_can_make
+  def test_what_i_can_make_and_how_many
     @pantry = Pantry.new
 
     @r1 = Recipe.new("Cheese Pizza")
@@ -75,6 +75,12 @@ class PantryTest < Minitest::Test
 
     expected = ["Pickles", "Peanuts"]
     assert_equal expected, @pantry.what_can_i_make
+
+    refute @pantry.can_i_make_this?(@r1)
+    assert @pantry.can_i_make_this?(@r2)
+
+    assert_equal 0, @pantry.how_many_of_this?(@r1)
+    assert_equal 4, @pantry.how_many_of_this?(@r2)
 
     expected = {"Pickles" => 4, "Peanuts" => 2}
     assert_equal expected, @pantry.how_many_can_i_make
