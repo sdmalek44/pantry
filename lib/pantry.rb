@@ -53,11 +53,10 @@ class Pantry
   end
 
   def how_many_can_i_make
-    how_many_of_each = @cookbook.map {|recipe| how_many_of_this?(recipe)}
-    how_many = Hash.new(0)
-    @cookbook.each_with_index do |recipe,index|
-      how_many[recipe.name] += how_many_of_each[index]
-    end
-    how_many.delete_if {|ingred, num| num == 0}
+    @cookbook.inject(Hash.new(0)) do |hash, recipe|
+      hash[recipe.name] += how_many_of_this?(recipe)
+      hash
+    end.delete_if {|ingred, num| num == 0}
   end
+
 end
