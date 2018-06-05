@@ -20,8 +20,9 @@ class Pantry
   end
 
   def add_to_shopping_list(recipe)
-    @shopping_list = recipe.ingredients.inject(@shopping_list) do |hash, ingredients|
-    hash[ingredients[0]] += ingredients[1]
+    ingredients = recipe.ingredients
+    @shopping_list = ingredients.inject(@shopping_list) do |hash, ingredient|
+    hash[ingredient[0]] += ingredient[1]
     hash
     end
   end
@@ -45,11 +46,12 @@ class Pantry
   end
 
   def how_many_of_this?(recipe)
-    valid_ingredients = @stock.inject([]) do |array, ingred_num|
-      array << (ingred_num[1] / recipe.amount_required(ingred_num[0])) unless recipe.ingredients[ingred_num[0]].nil?
+    @stock.inject([]) do |array, ingred_num|
+      unless recipe.ingredients[ingred_num[0]].nil?
+        array << (ingred_num[1] / recipe.amount_required(ingred_num[0]))
+      end
       array
-    end
-    valid_ingredients.min
+    end.min
   end
 
   def how_many_can_i_make
