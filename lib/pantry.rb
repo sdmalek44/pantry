@@ -48,10 +48,18 @@ class Pantry
 
   def how_many_of_this?(recipe)
     valid_ingredients = @stock.inject([]) do |array, ingred_num|
-      array << (recipe.amount_required(ingred_num[0])) / ingred_num[1])
+      array << (ingred_num[1] / recipe.amount_required(ingred_num[0])) unless recipe.ingredients[ingred_num[0]].nil?
+      array
     end
     valid_ingredients.min
   end
 
-  def 
+  def how_many_can_i_make
+    how_many_of_each = @cookbook.map {|recipe| how_many_of_this?(recipe)}
+    how_many = Hash.new(0)
+    @cookbook.each_with_index do |recipe,index|
+      how_many[recipe.name] += how_many_of_each[index]
+    end
+    how_many.delete_if {|ingred, num| num == 0}
+  end
 end

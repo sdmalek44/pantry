@@ -76,7 +76,7 @@ class PantryTest < Minitest::Test
     expected = ["Pickles", "Peanuts"]
     assert_equal expected, @pantry.what_can_i_make
 
-    # expected = {"Pickles" => 4, "Peanuts" => 2}
-    # assert_equal expected, @pantry.how_many_can_i_make
+    expected = {"Pickles" => 4, "Peanuts" => 2}
+    assert_equal expected, @pantry.how_many_can_i_make
   end
 end
