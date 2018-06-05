@@ -34,5 +34,16 @@ class PantryTest < Minitest::Test
     @pantry.add_to_shopping_list(@r)
 
     assert_equal expected, @pantry.shopping_list
+    @r_2 = Recipe.new("Spaghetti")
+    @r_2.add_ingredient("Spaghetti Noodles", 10)
+    @r_2.add_ingredient("Marinara Sauce", 10)
+    @r_2.add_ingredient("Cheese", 5)
+    @pantry.add_to_shopping_list(@r_2)
+    expected = {"Cheese" => 25, "Flour" => 20, "Spaghetti Noodles" => 10, "Marinara Sauce" => 10}
+
+    assert_equal expected, @pantry.shopping_list
+    printed = "* Cheese: 25\n* Flour: 20\n* Spaghetti Noodles: 10\n* Marinara Sauce: 10"
+
+    assert_equal printed, @pantry.print_shopping_list
   end
 end

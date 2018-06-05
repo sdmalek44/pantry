@@ -21,6 +21,12 @@ class Pantry
       hash[ingredients[0]] += ingredients[1]
       hash
     end
+  end
 
+  def print_shopping_list
+    shopping_list = @shopping_list.inject("") do |message, list|
+      message += "* #{list[0]}: #{list[1]}\n"
+    end
+    shopping_list.chomp
   end
 end
